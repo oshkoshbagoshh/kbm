@@ -1,0 +1,19 @@
+{
+    "name": "aj/kbm",
+    "description": "A vanilla PHP program used to automate affiliate link and blog posting generation. No outside dependendencies.",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Aj\\Kbm\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "AJ Javadi",
+            "email": "amirjavadi25@gmail.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {}
+}
