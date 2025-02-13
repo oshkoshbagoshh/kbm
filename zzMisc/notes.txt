@@ -1,0 +1,248 @@
+
+
+## Phase 2 - Factory 
+
+Code Implementation
+Explanation of the Code
+Influencer Class:
+
+Represents an influencer with properties like email, name, bio, and productGroup.
+Includes getter and setter methods for encapsulation and validation.
+Article Class:
+
+Represents an article with a title, content, and an associated Influencer.
+Encapsulates data with getters and setters.
+ArticleFactory Class:
+
+Implements the Factory Pattern to create Article objects.
+The static method createArticle simplifies the creation process.
+Association:
+
+Each Article is linked to an Influencer via the influencer property. This demonstrates a real-world relationship between articles and their authors.
+Example Usage:
+
+Two Influencer objects are created.
+Two Article objects are created using the ArticleFactory class.
+The Article objects are displayed, showing their titles, content, and associated influencer details.
+Output Example
+When you run the script, the output will look like this:
+
+Copy
+Article 1:
+Title: Top 10 Quick Meal Prep Tips for Busy Moms
+Content: This article explores quick and easy meal prep tips for busy moms...
+Influencer: Janelle (janelle.nowroozi@gmail.com)
+
+Article 2:
+Title: The Best Kitchen Gadgets for Home Cooks
+Content: Discover the best kitchen gadgets that every home cook needs...
+Influencer: Jeff (klutchsocialmedia@gmail.com)
+Benefits of This Approach
+Reusability:
+
+The ArticleFactory simplifies the creation of Article objects and ensures consistency.
+Encapsulation:
+
+Getters and setters enforce data validation and prevent direct modification of properties.
+Scalability:
+
+You can easily extend the Article or Influencer classes with additional properties or methods.
+Clean Code:
+
+The factory pattern separates object creation logic from the rest of the code, following the Single Responsibility Principle.
+Let me know if you need further refinements or additional features!
+
+
+
+To work with this associative array of influencers, you can follow these steps depending on what you want to achieve. I'll guide you through some common use cases:
+
+---
+
+### 1. **Iterate Through the Array**
+You can loop through this array to access each influencer's details. For example:
+
+```php
+foreach ($articles as $article) {
+    echo "Name: " . $article['name'] . "<br>";
+    echo "Email: " . $article['email'] . "<br>";
+    echo "Bio: " . $article['bio'] . "<br>";
+    echo "Product Group: " . $article['product_group'] . "<br><br>";
+}
+```
+
+This will display all the influencers' details one by one.
+
+---
+
+### 2. **Filter Out Invalid or Duplicate Entries**
+The array has some issues, like:
+- Duplicate entries for "haley."
+- Some keys are incorrectly structured, e.g., `"hgoetsch23@hotmail.com"` instead of `"email"`.
+- Missing or malformed data, such as `NULL` values for "bio."
+
+You can clean up the array by filtering out invalid entries:
+
+```php
+$cleanedArticles = array_filter($articles, function ($article) {
+    // Ensure the 'email' and 'name' keys exist and are valid
+    return isset($article['email'], $article['name']) && filter_var($article['email'], FILTER_VALIDATE_EMAIL);
+});
+
+// Remove duplicates based on 'email'
+$uniqueArticles = [];
+foreach ($cleanedArticles as $article) {
+    if (!isset($uniqueArticles[$article['email']])) {
+        $uniqueArticles[$article['email']] = $article;
+    }
+}
+$uniqueArticles = array_values($uniqueArticles); // Re-index the array
+```
+
+Now `$uniqueArticles` will contain only valid and unique entries.
+
+---
+
+### 3. **Group Influencers by Product Group**
+If you want to group influencers by their `product_group`, you can use the following code:
+
+```php
+$groupedByProductGroup = [];
+foreach ($articles as $article) {
+    if (isset($article['product_group'])) {
+        $groups = explode(',', $article['product_group']); // Handle multiple groups
+        foreach ($groups as $group) {
+            $group = trim($group); // Remove extra spaces
+            $groupedByProductGroup[$group][] = $article;
+        }
+    }
+}
+
+// Example: Display influencers in "Mom_A"
+if (isset($groupedByProductGroup['Mom_A'])) {
+    foreach ($groupedByProductGroup['Mom_A'] as $mom) {
+        echo "Name: " . $mom['name'] . "<br>";
+        echo "Email: " . $mom['email'] . "<br><br>";
+    }
+}
+```
+
+This will create an array where influencers are grouped by their product groups.
+
+---
+
+### 4. **Display Influencers with Tailwind CSS**
+If you're displaying the data on a webpage, you can use **Tailwind CSS** to style it. Here's an example of how to dynamically generate a list of influencers:
+
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto py-10">
+        <h1 class="text-3xl font-bold text-center mb-8">Influencers</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <?php
+            foreach ($articles as $article) {
+                if (isset($article['email']) && isset($article['name'])) { // Ensure valid data
+                    echo '
+                    <div class="bg-white shadow-lg rounded-lg p-6">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-4">' . htmlspecialchars($article['name']) . '</h2>
+                        <p class="text-gray-600"><span class="font-medium">Email:</span> ' . htmlspecialchars($article['email']) . '</p>
+                        <p class="text-gray-600"><span class="font-medium">Bio:</span> ' . htmlspecialchars($article['bio'] ?? 'No bio available') . '</p>
+                        <p class="text-gray-600"><span class="font-medium">Product Group:</span> ' . htmlspecialchars($article['product_group']) . '</p>
+                    </div>';
+                }
+            }
+            ?>
+        </div>
+    </div>
+</body>
+</html>
+```
+
+This will display each influencer in a card layout, styled with Tailwind CSS.
+
+---
+
+### 5. **Search for an Influencer by Name or Email**
+You can implement a search feature to find an influencer by their name or email:
+
+```php
+$searchTerm = "Janelle"; // Example search term
+$results = array_filter($articles, function ($article) use ($searchTerm) {
+    return stripos($article['name'], $searchTerm) !== false || stripos($article['email'], $searchTerm) !== false;
+});
+
+foreach ($results as $result) {
+    echo "Name: " . $result['name'] . "<br>";
+    echo "Email: " . $result['email'] . "<br><br>";
+}
+```
+
+This will return all influencers whose name or email matches the search term.
+
+---
+
+### 6. **Export the Data to JSON**
+If you want to use this data in JavaScript or send it to an API, you can export it as JSON:
+
+```php
+$jsonData = json_encode($articles, JSON_PRETTY_PRINT);
+file_put_contents('influencers.json', $jsonData);
+echo "Data exported to influencers.json";
+```
+
+This creates a `influencers.json` file with the data.
+
+---
+
+### 7. **Fixing the Array Issues**
+If you want to fix the malformed entries in the array programmatically, you can add a cleanup function:
+
+```php
+$articles = array_map(function ($article) {
+    // Fix missing or incorrect keys
+    if (isset($article['hgoetsch23@hotmail.com'])) {
+        $article['email'] = $article['hgoetsch23@hotmail.com'];
+        unset($article['hgoetsch23@hotmail.com']);
+    }
+    if (isset($article['amyomiller630@gmail.com'])) {
+        $article['email'] = $article['amyomiller630@gmail.com'];
+        unset($article['amyomiller630@gmail.com']);
+    }
+
+    // Ensure all required fields exist
+    $article['bio'] = $article['bio'] ?? 'No bio available';
+    $article['product_group'] = $article['product_group'] ?? 'Unknown';
+
+    return $article;
+}, $articles);
+```
+
+This will clean up the malformed entries and ensure consistency in the data structure.
+
+---
+
+### Summary
+- **Iterate** through the array to display data.
+- **Filter** invalid or duplicate entries.
+- **Group** influencers by product groups.
+- **Search** for specific influencers by name or email.
+- **Display** the data using Tailwind CSS for a clean UI.
+- **Export** the data to JSON for further processing.
+- **Fix** malformed entries in the array programmatically.
+
+
+
+================
+
+-  Clean up items:
+- AJ Needs to explain process a bit (just read the docs he sent)
+
+
+
