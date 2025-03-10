@@ -1,9 +1,9 @@
 <?php
 $host = '127.0.0.1';
-$db = 'affiliate_blog';
+$db = 'klutch';
 $user = 'root';
 $pass = '';
-$dbport = 5433;
+$dbport = 5432;
 
 
 $dsn = "pgsql:host=$host;dbname=$db;charset=$charset";
