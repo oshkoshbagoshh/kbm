@@ -233,7 +233,7 @@ This will clean up the malformed entries and ensure consistency in the data stru
 - **Filter** invalid or duplicate entries.
 - **Group** influencers by product groups.
 - **Search** for specific influencers by name or email.
-- **Display** the data using Tailwind CSS for a clean UI.
+- **Display** - keep it Bootstrap for sim\
 - **Export** the data to JSON for further processing.
 - **Fix** malformed entries in the array programmatically.
 

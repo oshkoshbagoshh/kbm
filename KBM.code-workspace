@@ -2,6 +2,9 @@
   "folders": [
     {
       "path": "."
+    },
+    {
+      "path": "../../Downloads/klutch_articles_json"
     }
   ],
   "settings": {
