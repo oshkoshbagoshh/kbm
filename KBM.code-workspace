@@ -5,6 +5,7 @@
     }
   ],
   "settings": {
-    "DockerRun.DisableDockerrc": true
+    "DockerRun.DisableDockerrc": true,
+    "DockerRun.DisableAutoGenerateConfig": true
   }
 }
