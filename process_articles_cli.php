@@ -56,15 +56,9 @@ foreach ($results as $result) {
                 ':video' => $article->getVideo(),
                 ':product_name' => $article->getProductName()
             ]);
-            /* The line `echo 'Article saved: ' . ->getTitle() . PHP_EOL;` is responsible for
-            outputting a message indicating that an article has been successfully saved to the
-            database. */
+
             echo 'Article saved: ' . $article->getTitle() . PHP_EOL;
-            /* The `catch (PDOException )` block is used for error handling in PHP. In this specific
-        context, it is catching any exceptions of type `PDOException` that may occur within the try
-        block. If an exception of type `PDOException` is thrown during the execution of the code
-        within the try block (such as a database connection error or a query execution error), the
-        catch block will handle the exception. */
+
         } catch (PDOException $e) {
             echo 'Failed to save article: ' . $e->getMessage() . PHP_EOL;
         }
