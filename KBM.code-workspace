@@ -1,7 +1,29 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	]
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "../../Downloads/klutch_articles_json"
+    },
+    {
+      "path": "../three-first-names/zzAJ_03_08_2025"
+    },
+    {
+      "path": "../three-first-names/public/images"
+    },
+    {
+      "path": "../three-first-names/public/favicon"
+    },
+    {
+      "path": "../../Staged_Loading/transfer-to-filezilla/TFNMS_LOCAL"
+    },
+    {
+      "path": "../../Staged_Loading/SCBUILD/Dynamo"
+    }
+  ],
+  "settings": {
+    "DockerRun.DisableDockerrc": true,
+    "DockerRun.DisableAutoGenerateConfig": true
+  }
 }
